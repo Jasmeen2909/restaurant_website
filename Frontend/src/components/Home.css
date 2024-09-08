@@ -1,0 +1,44 @@
+.home_intro {
+    display: flex;
+}
+
+.intro_left {
+    flex: 1;
+}
+
+.intro_right {
+    flex: 1;
+    padding-top: 95px;
+}
+
+.intro_left h1 {
+    color: #000;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 65px;
+    padding-top: 278px;
+    padding-left: 230px;
+}
+
+.intro_left p {
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+    padding-left: 230px;
+    width: 607px;
+}
+
+.intro_left button {
+    width: 160px;
+    height: 48px;
+    font-size: 17px;
+    flex-shrink: 0;
+    border-radius: 40px;
+    background: #F08733;
+    border: none;
+    margin-left: 230px;
+    margin-top: 55px;
+}
