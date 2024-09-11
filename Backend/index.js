@@ -10,7 +10,7 @@ const cors = require("cors");
 
 dotenv.config();
 
-const mongoURL = process.env.MONGO_URL;
+const mongoURL = "mongodb+srv://jasmeen:jasmeen@cluster0.a49kyml.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Connection options
 const options = {
@@ -32,7 +32,7 @@ mongoose.connect(mongoURL, options)
 
 // CORS configuration
 const corsOptions = {
-  origin: 'https://restaurant-website-onl9.vercel.app/', // Replace with your actual frontend URL
+  origin: 'https://restaurant-website-onl9.vercel.app', // Replace with your actual frontend URL
   credentials: true, // if you're using cookies for authentication
 };
 
