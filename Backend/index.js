@@ -10,7 +10,7 @@ const cors = require("cors");
 
 dotenv.config();
 
-const mongoURL = "mongodb+srv://jasmeen:jasmeen@cluster0.a49kyml.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const mongoURL = process.env.MONGOURL;
 
 // Connection options
 const options = {
