@@ -20,7 +20,7 @@ const Login = () => {
     };
     const handleLogin = async(e)=>{
         e.preventDefault()
-        try {const response=await axios.post('https://restaurant-website-qgry.onrender.com/api/auth/login',{
+        try {const response=await axios.post('https://restaurant-website-delta-three.vercel.app/api/auth/login',{
             email,
             password
         });
@@ -41,7 +41,7 @@ const Login = () => {
     const handleRegister=async(e)=>{
 
         e.preventDefault()
-        try {const response=await axios.post('https://restaurant-website-qgry.onrender.com/api/auth/register',{
+        try {const response=await axios.post('https://restaurant-website-delta-three.vercel.app/api/auth/register',{
             username,
             email,
             password
