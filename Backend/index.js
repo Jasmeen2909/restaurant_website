@@ -10,11 +10,12 @@ const cors = require("cors");
 
 dotenv.config();
 
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 30000, // Adjust this as needed
+});
+
   .then(() => {
     console.log("DB Connection Successful");
   })
