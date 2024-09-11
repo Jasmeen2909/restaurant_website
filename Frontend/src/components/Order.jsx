@@ -34,7 +34,7 @@ const Order = () => {
             };
     
             try {
-                const response = await fetch('http://localhost:8800/api/order/placeOrder', {
+                const response = await fetch('https://restaurant-website-delta-three.vercel.app/api/order/placeOrder', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
