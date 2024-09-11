@@ -1,19 +1,62 @@
-import React, { useState } from 'react'
-import Navbar from './Navbar'
-import Footer from './Footer'
-import order_img from "../assets/order_img.png"
-import './Order.css'
-import omlet from "../assets/omlet.png"
-import pancakes from "../assets/pancakes.png"
-import pizza from "../assets/Pizza.png"
-import pasta from "../assets/pasta.png"
-import spaghetti from "../assets/spaghetti.png"
-import wrap from "../assets/wrap.png"
-import smoothie from "../assets/smoothie.png"
-import hotcoffee from "../assets/hot coffee.png"
+import React, { useState } from 'react';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import order_img from "../assets/order_img.png";
+import './Order.css';
+import omlet from "../assets/omlet.png";
+import pancakes from "../assets/pancakes.png";
+import pizza from "../assets/Pizza.png";
+import pasta from "../assets/pasta.png";
+import spaghetti from "../assets/spaghetti.png";
+import wrap from "../assets/wrap.png";
+import smoothie from "../assets/smoothie.png";
+import hotcoffee from "../assets/hot coffee.png";
+import { useNavigate } from 'react-router-dom';
 
 const Order = () => {
     const [cart, setCart] = useState([]);
+    const navigate = useNavigate();
+
+    const handleOrderNow = async () => {
+        const userData = localStorage.getItem('userdata');
+        if (!userData) {
+            navigate('/login');
+        } else {
+            const user = JSON.parse(userData);
+            const orderData = {
+                userId: user._id,
+                items: cart.map(item => ({
+                    itemid: item.id, // Item ID
+                    title: item.title, // Include title
+                    price: item.price, // Include price
+                    quantity: item.quantity // Quantity
+                }))
+            };
+    
+            try {
+                const response = await fetch('http://localhost:8800/api/order/placeOrder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData),
+                });
+    
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Order placed successfully!');
+                    setCart([]); // Clear the cart
+                } else {
+                    alert(`Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Error placing order:', error);
+                alert('An error occurred while placing the order.');
+            }
+        }
+    };
+    
+    
 
     const menuItems = {
         breakfast: [
@@ -37,9 +80,9 @@ const Order = () => {
     const addToCart = (item) => {
         const existingItem = cart.find(cartItem => cartItem.id === item.id);
         if (existingItem) {
-            setCart(cart.map(cartItem => 
-                cartItem.id === item.id 
-                    ? { ...cartItem, quantity: cartItem.quantity + 1 } 
+            setCart(cart.map(cartItem =>
+                cartItem.id === item.id
+                    ? { ...cartItem, quantity: cartItem.quantity + 1 }
                     : cartItem
             ));
         } else {
@@ -81,20 +124,20 @@ const Order = () => {
                             <p>No items added yet.</p>
                         ) : (
                             <ul>
-  {cart.map((item) => (
-    <li key={item.id}>
-      {item.title} - {item.quantity}
-      <div className="button-container">
-        <button className="icon-btn" onClick={() => updateQuantity(item.id, -1)}>−</button>
-        <button className="icon-btn" onClick={() => updateQuantity(item.id, 1)}>+</button>
-        <button className="remove-btn" onClick={() => removeFromCart(item.id)}>✖</button>
-      </div>
-    </li>
-  ))}
-</ul>
-
+                                {cart.map((item) => (
+                                    <li key={item.id}>
+                                        {item.title} - {item.quantity}
+                                        <div className="button-container">
+                                            <button className="icon-btn" onClick={() => updateQuantity(item.id, -1)}>−</button>
+                                            <button className="icon-btn" onClick={() => updateQuantity(item.id, 1)}>+</button>
+                                            <button className="remove-btn" onClick={() => removeFromCart(item.id)}>✖</button>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
                         )}
                         <p>Total: Rs.{cart.reduce((total, item) => total + item.price * item.quantity, 0)}</p>
+                        <button className='order_button' onClick={handleOrderNow}>Order Now</button>
                     </div>
                 </div>
 
@@ -120,7 +163,7 @@ const Order = () => {
             </div>
             <Footer />
         </div>
-    )
-}
+    );
+};
 
-export default Order
+export default Order;
