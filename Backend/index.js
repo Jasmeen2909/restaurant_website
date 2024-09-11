@@ -9,6 +9,7 @@ const reservationRoute = require("./routes/reservation");
 const cors = require("cors");
 
 dotenv.config();
+
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -21,8 +22,15 @@ mongoose
     console.error("Error connecting to MongoDB", err);
   });
 
+// CORS configuration
+const corsOptions = {
+  origin: 'https://restaurant-website-1-44ba.onrender.com', // Replace with your actual frontend URL
+  credentials: true, // if you're using cookies for authentication
+};
+
+app.use(cors(corsOptions));
+
 // Middlewares
-app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/order", orderRoute);
