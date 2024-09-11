@@ -23,7 +23,7 @@ const Login = () => {
         try {const response=await axios.post('https://restaurant-website-delta-three.vercel.app/api/auth/login',{
             email,
             password
-        });
+        },{ withCredentials: true });
         const data=response.data;
         localStorage.setItem('userdata',JSON.stringify(data));
         setsuccess('Successfully Login');
@@ -45,7 +45,7 @@ const Login = () => {
             username,
             email,
             password
-        });
+        },{ withCredentials: true });
         setsuccess('Successfully Registered');
         navigate('/');
             
