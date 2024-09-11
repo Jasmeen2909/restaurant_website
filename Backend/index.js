@@ -30,17 +30,29 @@ mongoose.connect(mongoURL, options)
     process.exit(1); // Exit the process with a failure code
   });
 
-// CORS configuration
+// Manually set CORS headers for all responses
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://restaurant-website-onl9.vercel.app");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Credentials", "true");
+
+  // If it's a preflight request, respond with success
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
+
+// CORS configuration using cors package
 const corsOptions = {
-  origin: 'https://restaurant-website-onl9.vercel.app', // Frontend URL
-  credentials: true, // Enable cookies
-  optionsSuccessStatus: 200 // For legacy browser support
+  origin: 'https://restaurant-website-onl9.vercel.app',
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
-
-// Handle preflight requests (OPTIONS method) for all routes
-app.options('*', cors(corsOptions));
 
 // Middlewares
 app.use(express.json());
