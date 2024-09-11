@@ -10,7 +10,7 @@ const cors = require("cors");
 
 dotenv.config();
 
-const mongoURL = process.env.MONGOURL;
+const mongoURL = process.env.MONGO_URL;
 
 // Connection options
 const options = {
@@ -32,11 +32,15 @@ mongoose.connect(mongoURL, options)
 
 // CORS configuration
 const corsOptions = {
-  origin: 'https://restaurant-website-onl9.vercel.app', // Replace with your actual frontend URL
-  credentials: true, // if you're using cookies for authentication
+  origin: 'https://restaurant-website-onl9.vercel.app', // Frontend URL
+  credentials: true, // Enable cookies
+  optionsSuccessStatus: 200 // For legacy browser support
 };
 
 app.use(cors(corsOptions));
+
+// Handle preflight requests (OPTIONS method) for all routes
+app.options('*', cors(corsOptions));
 
 // Middlewares
 app.use(express.json());
