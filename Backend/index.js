@@ -10,17 +10,24 @@ const cors = require("cors");
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URL, {
+const mongoURL = process.env.MONGO_URL;
+
+// Connection options
+const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 30000, // Adjust this as needed
-});
+  serverSelectionTimeoutMS: 30000, // Time to wait for server selection before timing out
+};
 
+// Connect to MongoDB
+mongoose.connect(mongoURL, options)
   .then(() => {
     console.log("DB Connection Successful");
   })
   .catch((err) => {
-    console.error("Error connecting to MongoDB", err);
+    console.error("Error connecting to MongoDB:", err.message);
+    console.error("Stack Trace:", err.stack);
+    process.exit(1); // Exit the process with a failure code
   });
 
 // CORS configuration
