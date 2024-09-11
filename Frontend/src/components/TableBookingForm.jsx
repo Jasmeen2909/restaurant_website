@@ -33,7 +33,7 @@ const TableBookingForm = () => {
     }
 
     try {
-      const response = await axios.post('https://restaurant-website-qgry.onrender.com/api/reservation/create', {
+      const response = await axios.post('https://restaurant-website-delta-three.vercel.app/api/reservation/create', {
         userId: userData._id, // Send userId along with reservation data
         name: userData.username,
         contact: userData.email,
